@@ -8,13 +8,50 @@ const styles = {
 };
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      color: "black",
+      fontWeight: "",
+      fontStyle: "",
+      textDecorationLine: ""
+    };
+  }
+  changeColor(color) {
+    this.setState({ color: color });
+  }
+
+  italic() {
+    if (!this.state.fontStyle) {
+      this.setState({ fontStyle: "italic" });
+    } else {
+      this.setState({ fontStyle: "" });
+    }
+  }
+
+  bold() {
+    if (!this.state.fontWeight) {
+      this.setState({ fontWeight: "bold" });
+    } else {
+      this.setState({ fontWeight: "" });
+    }
+  }
+
+  underline() {
+    if (!this.state.textDecorationLine) {
+      this.setState({ textDecorationLine: "underline" });
+    } else {
+      this.setState({ textDecorationLine: "" });
+    }
+  }
+
   render() {
     let stylings = ["bold", "italic", "underline"];
     let colors = ["yellow", "blue", "red", "black", "purple"];
 
     let stylingBoxes = stylings.map(style => {
       return (
-        <button style={styles[style]} key={style}>
+        <button style={styles[style]} key={style} onClick={() => this[style]()}>
           {style}
         </button>
       );
@@ -23,6 +60,7 @@ class App extends Component {
     let colorBoxes = colors.map(color => {
       return (
         <button
+          onClick={() => this.changeColor(color)}
           style={{ backgroundColor: color, height: 30, width: 30 }}
           key={color}
         />
@@ -35,7 +73,7 @@ class App extends Component {
         {stylingBoxes}
         <br />
         <br />
-        <textarea />
+        <textarea style={this.state} />
         <br />
         {colorBoxes}
       </div>
